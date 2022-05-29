@@ -15,6 +15,7 @@ class Bot(discord.Client):
   async def on_connect(self):
     print('Connected to Discord.')
     return
+
   async def on_ready(self):
     print('Ready.')
     # Terminal commands:
@@ -35,12 +36,14 @@ class Bot(discord.Client):
     if message.content.startswith(symbol):
       print(message.content)
       return
+
   async def on_voice_state_update(self, member, before, after):
     id = member.id
     if after.channel != None:
       #Left the channel
       print('Left the channel.')
       return
+
     elif before.channel == None & after.channel != None:
       #Joined the channel
       print('Joined the channel.')
@@ -59,6 +62,7 @@ def viewAllRows():
 
 def createTables():
   conn = sqlite3.connect('test.db')
+
   conn.execute('''CREATE TABLE userdata
               (
                 id INTEGER NOT NULL, 
@@ -67,6 +71,7 @@ def createTables():
                 PRIMARY KEY (id, serverId)
                 );
   ''')
+
   conn.execute('''CREATE TABLE serverdata
               (
                 serverId INTEGER NOT NULL,
@@ -86,7 +91,6 @@ intents = discord.Intents.default()
 intents.members = True
 intents.voice_states = True
 
-createTables()
 viewAllRows()
 
 
